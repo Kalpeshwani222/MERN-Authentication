@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const commentRoute = require("./routes/commentsRoute");
+const authRoute = require("./routes/authRoute");
+const {notFound,errorHandler} =  require("./middlewares/errorMiddleware")
 const connectDb = require("./db/db");
 const cors = require("cors");
 const port = process.env.PORT || 8000;
@@ -17,8 +18,13 @@ connectDb();
 app.use(express.json());
 
 
-app.use("/api/comment",commentRoute)
+app.use("/api/auth",authRoute)
+
+app.use(notFound);
+app.use(errorHandler);
+
 
 app.listen(port, () =>{
     console.log(`app started on ${port}`)
 })
+
