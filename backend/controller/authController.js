@@ -3,6 +3,8 @@ const bcrypt = require("bcrypt");
 const generateToken = require("../utils/generateToken");
 const Token = require("../model/token");
 const crypto = require("crypto");
+const resetpassToken = require("../model/resetpass");
+
 
 const sendmail = require("../utils/EmailSend");
 
@@ -12,6 +14,9 @@ const userLogin = async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
+    if (!email || !password) {
+      return res.status(401).json({ message: "All fields are required" });
+    }
 
     //email
     if (!user) {
@@ -74,13 +79,13 @@ const userRegister = async (req, res) => {
     }).save();
 
     const url = `${process.env.BASE_URL}api/auth/${user._id}/verify/${token.token}`;
-
+    console.log(url);
     //email send
     const sgMail = require("@sendgrid/mail");
     sgMail.setApiKey(process.env.API_KEY);
 
     sendmail({
-      from: "noreply.newsapplication@gmail.com",
+      from: process.env.FROM_EMAIL,
       to: user.email,
       subject: "Verify Your Email Account",
       html: url,
@@ -97,12 +102,13 @@ const userRegister = async (req, res) => {
   }
 };
 
+//verify email link
 const verifyUser = async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.params.id });
 
     if (!user) {
-      return res.status(400).send({ message: "Invalid link" });
+      return res.status(409).json({ message: "Email not exist" });
     }
 
     const token = await Token.findOne({
@@ -115,7 +121,10 @@ const verifyUser = async (req, res) => {
     }
 
     //update to true
-    await User.updateOne({ _id: user._id, verified: true });
+    await User.updateOne(
+      { _id: user._id }, // Filter
+      { verified: true } // Update
+    );
 
     //delete token
     await token.remove();
@@ -125,5 +134,7 @@ const verifyUser = async (req, res) => {
     res.status(500).send({ message: "Error" });
   }
 };
+
+
 
 module.exports = { userLogin, userRegister, verifyUser };

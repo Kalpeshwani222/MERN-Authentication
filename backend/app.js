@@ -1,6 +1,8 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const authRoute = require("./routes/authRoute");
+const resetPassRoute = require("./routes/resetPassRoute");
+
 const {notFound,errorHandler} =  require("./middlewares/errorMiddleware")
 const connectDb = require("./db/db");
 const cors = require("cors");
@@ -18,7 +20,9 @@ connectDb();
 app.use(express.json());
 
 
-app.use("/api/auth",authRoute)
+app.use("/api/auth",authRoute);
+app.use("/api/reset",resetPassRoute);
+
 
 app.use(notFound);
 app.use(errorHandler);

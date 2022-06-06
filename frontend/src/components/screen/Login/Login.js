@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../../actions/userActions";
-import { useHistory } from "react-router-dom";
-
+import { useHistory, Link } from "react-router-dom";
+import "./login.css";
 
 const Login = () => {
   const history = useHistory();
@@ -15,7 +15,6 @@ const Login = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { loading, error, userInfo } = userLogin;
 
-  
   useEffect(() => {
     if (userInfo) {
       history.push("/home");
@@ -29,11 +28,9 @@ const Login = () => {
 
   return (
     <>
-      <section className="">
-
-        {error && <h3>{error}</h3>}
-  
-          <div className="mt-5 p-5">
+      <section className="login-section">
+        <div className="mt-5 p-5">
+          {error && <span className="danger">{error}</span>}
           <form onSubmit={submitHandler}>
             <input
               type="email"
@@ -49,6 +46,10 @@ const Login = () => {
             />
             <br /> <br />
             <button type="submit">Submit</button>
+            <br />
+            <Link to="/register">{"Don't have an account? Sign Up"}</Link>
+            <br />
+            <Link to="/reset">{"Don't remember password?Forgot it"}</Link>
           </form>
         </div>
       </section>

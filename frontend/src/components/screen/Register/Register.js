@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../../actions/userActions";
+import { Link } from "react-router-dom";
 
 const Register = () => {
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,19 +13,18 @@ const Register = () => {
   const userRegister = useSelector((state) => state.userRegister);
   const { loading, error, userInfo } = userRegister;
 
-console.log(userInfo);
-  
+  console.log(userInfo);
+
   const submitHandler = async (e) => {
     e.preventDefault();
-   dispatch(register(name, email, password));
-  console.log("click");
+    dispatch(register(name, email, password));
+    console.log("click");
   };
 
   return (
     <section className="">
-
-    {error && <h3>{error}</h3>}
-    {userInfo && <h4>{userInfo.message}</h4>}
+      {error && <h3>{error}</h3>}
+      {userInfo && <h4>{userInfo.message}</h4>}
       <div className="mt-5 p-5">
         <form onSubmit={submitHandler}>
           <input
@@ -49,6 +48,8 @@ console.log(userInfo);
           />
           <br /> <br />
           <button type="submit">Submit</button>
+          <br />
+          <Link to="/">{"You an have an account?Sign IN"}</Link>
         </form>
       </div>
     </section>

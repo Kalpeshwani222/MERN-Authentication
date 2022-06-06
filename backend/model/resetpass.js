@@ -2,15 +2,16 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 
-const tokenSchema = mongoose.Schema({
-    userId :{
+const resetpassSchema = mongoose.Schema({
+
+    useridid :{
         type:Schema.Types.ObjectId,
         require:true,
         ref:"user",
         unique:true,
     },
 
-    token : {
+    resettoken : {
         type:String,
         require:true
     },
@@ -21,6 +22,6 @@ const tokenSchema = mongoose.Schema({
     }
 })
 
-const token = mongoose.model("token",tokenSchema);
+const resetpassToken = mongoose.model("resetToken",resetpassSchema);
 
- module.exports = token;
+ module.exports = resetpassToken;
