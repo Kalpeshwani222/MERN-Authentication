@@ -39,7 +39,7 @@ const resetPassword = async (req, res) => {
     const sgMail = require("@sendgrid/mail");
     sgMail.setApiKey(process.env.API_KEY);
 
-    const url = `http://localhost:3000/new-pass/${user._id}/${token.resettoken}`;
+    const url = `${process.env.BASE_URL}new-pass/${user._id}/${token.resettoken}`;
 
     sendmail({
       from: process.env.FROM_EMAIL,
