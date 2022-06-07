@@ -79,7 +79,7 @@ const userRegister = async (req, res) => {
     }).save();
 
     const url = `${process.env.BASE_URL}api/auth/${user._id}/verify/${token.token}`;
-    console.log(url);
+
     //email send
     const sgMail = require("@sendgrid/mail");
     sgMail.setApiKey(process.env.API_KEY);

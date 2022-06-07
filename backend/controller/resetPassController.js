@@ -40,7 +40,7 @@ const resetPassword = async (req, res) => {
     sgMail.setApiKey(process.env.API_KEY);
 
     const url = `http://localhost:3000/new-pass/${user._id}/${token.resettoken}`;
-    console.log(url);
+
     sendmail({
       from: process.env.FROM_EMAIL,
       to: user.email,
@@ -91,8 +91,8 @@ const verifyResetPass = async (req, res) => {
       message: "Password Change Successfully",
     });
   } catch (error) {
-    console.log(error);
-    // return res.status(500).send({ message: "Sothing Error Occured" });
+    // console.log(error);
+    return res.status(500).send({ message: "Sothing Error Occured" });
   }
 };
 

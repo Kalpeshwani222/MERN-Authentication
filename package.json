@@ -5,10 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon backend/app.js",
-    "client":"npm start --prefix frontend",
-    "dev":"concurrently \"npm start \" \"npm run client\"",
-    "heroku-postbuild":"NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
-
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm start \" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +24,7 @@
     "mongoose": "^6.3.4",
     "nodemailer": "^6.7.5",
     "nodemailer-sendgrid-transport": "^0.2.0",
+    "nodemon": "^2.0.16",
     "socket.io": "^4.5.1"
   }
 }
